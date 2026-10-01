@@ -8,11 +8,13 @@ RUN mvn clean package -DskipTests --no-transfer-progress
 # ── Stage 2: Chay tren Tomcat 10 ─────────────────────────────
 FROM tomcat:10.1-jdk11
 
+# Cai unzip de extract WAR luc startup
+RUN apt-get update && apt-get install -y --no-install-recommends unzip && rm -rf /var/lib/apt/lists/*
+
 RUN rm -rf /usr/local/tomcat/webapps/*
 
 COPY --from=build /app/target/ThanhtoanNganhang.war /usr/local/tomcat/webapps/ROOT.war
 
-# Script startup: ghi context.xml voi gia tri thuc tu env var
 COPY docker-entrypoint.sh /docker-entrypoint.sh
 RUN chmod +x /docker-entrypoint.sh
 

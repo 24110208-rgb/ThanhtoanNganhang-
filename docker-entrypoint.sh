@@ -6,22 +6,16 @@ set -e
 [ -z "$DB_USER" ]     && echo "ERROR: DB_USER is not set"     && exit 1
 [ -z "$DB_PASSWORD" ] && echo "ERROR: DB_PASSWORD is not set" && exit 1
 
-WAR=/tmp/ROOT.war
+WAR=/usr/local/tomcat/webapps/ROOT.war
 WEBROOT=/usr/local/tomcat/webapps/ROOT
 
-# 2. Copy WAR ra ngoai TRUOC, xoa WAR goc ngay sau do
-#    (tranh Tomcat thay ca ROOT/ + ROOT.war roi redeploy tu WAR, de mat context.xml)
-cp /usr/local/tomcat/webapps/ROOT.war "$WAR"
-rm -f /usr/local/tomcat/webapps/ROOT.war
-
-# 3. Extract vao webapps/ROOT/
+# 2. Xoa WAR goc TRUOC roi extract bang unzip
+#    (Tomcat khong the redeploy tu WAR neu da bi xoa)
 mkdir -p "$WEBROOT"
-cd "$WEBROOT"
-jar -xf "$WAR"
+unzip -o "$WAR" -d "$WEBROOT"
 rm -f "$WAR"
 
-# 4. Ghi context.xml vao conf/Catalina/localhost/ROOT.xml
-#    (Tomcat 10 doc file nay uu tien hon META-INF/context.xml)
+# 3. Ghi context.xml vao conf/Catalina/localhost/ROOT.xml
 mkdir -p /usr/local/tomcat/conf/Catalina/localhost
 cat > /usr/local/tomcat/conf/Catalina/localhost/ROOT.xml << CTXEOF
 <?xml version="1.0" encoding="UTF-8"?>
@@ -46,7 +40,7 @@ cat > /usr/local/tomcat/conf/Catalina/localhost/ROOT.xml << CTXEOF
 </Context>
 CTXEOF
 
-echo "==> OK: WAR extracted, ROOT.xml written for DB_USER=${DB_USER}"
+echo "==> OK: WAR extracted to ROOT/, ROOT.xml written for DB_USER=${DB_USER}"
 
-# 5. Khoi dong Tomcat
+# 4. Khoi dong Tomcat
 exec /usr/local/tomcat/bin/catalina.sh run
