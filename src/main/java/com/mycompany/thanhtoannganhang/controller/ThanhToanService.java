@@ -2,9 +2,7 @@ package com.mycompany.thanhtoannganhang.controller;
 
 import com.mycompany.thanhtoannganhang.dto.ThanhToanRequest;
 import com.mycompany.thanhtoannganhang.dto.ThanhToanResponse;
-import com.mycompany.thanhtoannganhang.model.dao.GiaoDichDAO;
 import com.mycompany.thanhtoannganhang.model.dao.GiaoDichDAOImpl;
-import com.mycompany.thanhtoannganhang.model.dao.TaiKhoanDAO;
 import com.mycompany.thanhtoannganhang.model.dao.TaiKhoanDAOImpl;
 import com.mycompany.thanhtoannganhang.model.entity.GiaoDich;
 import com.mycompany.thanhtoannganhang.model.entity.TaiKhoan;
@@ -98,7 +96,6 @@ public class ThanhToanService {
     // ─────────────────────────────────────────────────────────────────
     //  XÁC NHẬN GIAO DỊCH QR
     // ─────────────────────────────────────────────────────────────────
-    @Transactional
     public ThanhToanResponse xacNhanQR(String maGiaoDich) {
         Optional<GiaoDich> opt = giaoDichDAO.findByMaGiaoDich(maGiaoDich);
         if (opt.isEmpty()) {
