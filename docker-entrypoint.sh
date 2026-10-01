@@ -1,18 +1,22 @@
 #!/bin/sh
 set -e
 
-# Extract WAR truoc (neu chua co)
-if [ ! -d /usr/local/tomcat/webapps/ROOT ]; then
-    mkdir -p /usr/local/tomcat/webapps/ROOT
-    cd /usr/local/tomcat/webapps/ROOT
-    jar -xf /usr/local/tomcat/webapps/ROOT.war
-fi
+WAR=/tmp/ROOT.war
+WEBROOT=/usr/local/tomcat/webapps/ROOT
 
-# Tao META-INF neu chua co
-mkdir -p /usr/local/tomcat/webapps/ROOT/META-INF
+# Extract WAR vao /tmp truoc, sau do copy vao webapps
+mkdir -p "$WEBROOT"
+cp /usr/local/tomcat/webapps/ROOT.war "$WAR"
+cd "$WEBROOT"
+jar -xf "$WAR"
+rm -f "$WAR"
+
+# Xoa WAR goc de Tomcat khong tu deploy lai
+rm -f /usr/local/tomcat/webapps/ROOT.war
 
 # Ghi context.xml voi gia tri thuc tu environment variables
-cat > /usr/local/tomcat/webapps/ROOT/META-INF/context.xml << CTXEOF
+mkdir -p "$WEBROOT/META-INF"
+cat > "$WEBROOT/META-INF/context.xml" << CTXEOF
 <?xml version="1.0" encoding="UTF-8"?>
 <Context path="/">
   <Resource
@@ -33,7 +37,7 @@ cat > /usr/local/tomcat/webapps/ROOT/META-INF/context.xml << CTXEOF
 </Context>
 CTXEOF
 
-echo "==> context.xml written with DB_USER=${DB_USER}"
+echo "==> WAR extracted, context.xml written for DB_USER=${DB_USER}"
 
 # Khoi dong Tomcat
 exec /usr/local/tomcat/bin/catalina.sh run
