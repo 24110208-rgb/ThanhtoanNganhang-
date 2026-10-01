@@ -3,6 +3,7 @@ package com.mycompany.thanhtoannganhang.controller;
 import com.mycompany.thanhtoannganhang.dto.ThanhToanRequest;
 import com.mycompany.thanhtoannganhang.dto.ThanhToanResponse;
 import com.mycompany.thanhtoannganhang.model.entity.GiaoDich;
+import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
