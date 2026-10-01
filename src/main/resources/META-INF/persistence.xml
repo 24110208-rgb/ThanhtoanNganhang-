@@ -7,36 +7,18 @@
 
   <persistence-unit name="my_persistence_unit" transaction-type="JTA">
 
-    <!--
-      Datasource JNDI được khai báo trong context.xml (Tomcat/GlassFish).
-      Thay "jdbc/thanhtoanDB" bằng tên bạn cấu hình trong server.
-    -->
     <jta-data-source>jdbc/thanhtoanDB</jta-data-source>
 
-    <!-- ── Khai báo tường minh tất cả Entity ────────────────────── -->
     <class>com.mycompany.thanhtoannganhang.model.entity.TaiKhoan</class>
     <class>com.mycompany.thanhtoannganhang.model.entity.GiaoDich</class>
 
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
 
     <properties>
-      <!-- EclipseLink (GlassFish/Payara mặc định) -->
-      <property name="jakarta.persistence.schema-generation.database.action"
-                value="create"/>
-      <!-- Tự tạo bảng nếu chưa tồn tại; đổi thành "none" khi production -->
-
-      <property name="eclipselink.logging.level"        value="FINE"/>
-      <property name="eclipselink.logging.level.sql"    value="FINE"/>
-      <property name="eclipselink.logging.parameters"   value="true"/>
-
-      <!-- Hibernate (WildFly / nếu dùng Hibernate thay EclipseLink) -->
-      <!--
-      <property name="hibernate.hbm2ddl.auto"           value="update"/>
-      <property name="hibernate.show_sql"               value="true"/>
-      <property name="hibernate.format_sql"             value="true"/>
-      <property name="hibernate.dialect"
-                value="org.hibernate.dialect.MySQLDialect"/>
-      -->
+      <!-- Dung schema co san, khong tu dong tao/xoa bang -->
+      <property name="jakarta.persistence.schema-generation.database.action" value="none"/>
+      <property name="eclipselink.logging.level"      value="WARNING"/>
+      <property name="eclipselink.logging.level.sql"  value="WARNING"/>
     </properties>
 
   </persistence-unit>
