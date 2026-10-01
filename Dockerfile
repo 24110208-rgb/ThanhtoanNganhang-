@@ -14,15 +14,7 @@ RUN rm -rf /usr/local/tomcat/webapps/*
 # Copy WAR
 COPY --from=build /app/target/ThanhtoanNganhang.war /usr/local/tomcat/webapps/ROOT.war
 
-# Khai bao bien moi truong (Render se inject gia tri thuc)
-ENV DB_URL=""
-ENV DB_USER=""
-ENV DB_PASSWORD=""
-
-# Truyen bien vao Tomcat qua CATALINA_OPTS
-ENV CATALINA_OPTS="-DDB_URL=${DB_URL} -DDB_USER=${DB_USER} -DDB_PASSWORD=${DB_PASSWORD}"
-
 EXPOSE 8080
 
-# Script khoi dong: cap nhat CATALINA_OPTS truoc khi chay Tomcat
-CMD export CATALINA_OPTS="-DDB_URL=${DB_URL} -DDB_USER=${DB_USER} -DDB_PASSWORD=${DB_PASSWORD}" && catalina.sh run
+# Tomcat doc JAVA_OPTS khi khoi dong — Render inject DB_URL, DB_USER, DB_PASSWORD
+CMD ["/bin/sh", "-c", "export JAVA_OPTS=\"-DDB_URL=${DB_URL} -DDB_USER=${DB_USER} -DDB_PASSWORD=${DB_PASSWORD}\" && catalina.sh run"]
