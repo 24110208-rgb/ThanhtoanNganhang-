@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thanh Toán Ngân Hàng</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- ═══════════════════════════ HEADER ═══════════════════════════ -->
+  <header class="header">
+    <div class="header__inner">
+      <div class="header__logo">
+        <span class="logo-icon">🏦</span>
+        <span class="logo-text">BankPay</span>
+      </div>
+      <nav class="header__nav">
+        <a href="#" class="nav-link active" data-tab="home">Trang chủ</a>
+        <a href="#" class="nav-link" data-tab="lichsu">Lịch sử</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ═══════════════════════════ MAIN ════════════════════════════ -->
+  <main class="main">
+
+    <!-- ── SECTION: HOME ─────────────────────────────────────────── -->
+    <section id="page-home" class="page active">
+
+      <div class="hero">
+        <h1 class="hero__title">Thanh toán an toàn &amp; nhanh chóng</h1>
+        <p class="hero__sub">Chuyển khoản ngân hàng hoặc quét mã QR chỉ trong vài giây</p>
+      </div>
+
+      <!-- Payment card -->
+      <div class="card payment-card">
+
+        <!-- TAB SWITCHER -->
+        <div class="tabs" role="tablist">
+          <button class="tab active" id="tab-ck" role="tab"
+                  aria-selected="true" aria-controls="panel-ck">
+            💳 Chuyển khoản
+          </button>
+          <button class="tab" id="tab-qr" role="tab"
+                  aria-selected="false" aria-controls="panel-qr">
+            📱 Thanh toán QR
+          </button>
+        </div>
+
+        <!-- ── PANEL: CHUYỂN KHOẢN ─────────────────────────────── -->
+        <div id="panel-ck" class="tab-panel active" role="tabpanel"
+             aria-labelledby="tab-ck">
+          <form id="form-ck" novalidate>
+            <div class="form-grid">
+
+              <div class="form-group">
+                <label for="ck-nguon">Số tài khoản nguồn <span class="req">*</span></label>
+                <input type="text" id="ck-nguon" name="soTaiKhoanNguon"
+                       placeholder="Nhập số tài khoản của bạn"
+                       maxlength="20" autocomplete="off" required />
+                <span class="err" id="err-ck-nguon"></span>
+              </div>
+
+              <div class="form-group">
+                <label for="ck-dich">Số tài khoản nhận <span class="req">*</span></label>
+                <input type="text" id="ck-dich" name="soTaiKhoanDich"
+                       placeholder="Nhập số tài khoản người nhận"
+                       maxlength="20" autocomplete="off" required />
+                <span class="err" id="err-ck-dich"></span>
+              </div>
+
+              <div class="form-group">
+                <label for="ck-nganhang">Ngân hàng nhận</label>
+                <select id="ck-nganhang" name="nganHangDich">
+                  <option value="">-- Cùng ngân hàng --</option>
+                  <option value="970415">Vietinbank</option>
+                  <option value="970436">Vietcombank</option>
+                  <option value="970432">VPBank</option>
+                  <option value="970407">Techcombank</option>
+                  <option value="970405">Agribank</option>
+                  <option value="970422">MBBank</option>
+                  <option value="970423">TPBank</option>
+                  <option value="970416">ACB</option>
+                  <option value="970418">BIDV</option>
+                  <option value="796500">OCB</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="ck-tien">Số tiền (VNĐ) <span class="req">*</span></label>
+                <div class="input-money">
+                  <input type="number" id="ck-tien" name="soTien"
+                         placeholder="0" min="1000" step="1000" required />
+                  <span class="money-unit">VNĐ</span>
+                </div>
+                <div class="quick-amounts">
+                  <button type="button" class="amount-btn" data-target="ck-tien" data-val="50000">50K</button>
+                  <button type="button" class="amount-btn" data-target="ck-tien" data-val="100000">100K</button>
+                  <button type="button" class="amount-btn" data-target="ck-tien" data-val="200000">200K</button>
+                  <button type="button" class="amount-btn" data-target="ck-tien" data-val="500000">500K</button>
+                  <button type="button" class="amount-btn" data-target="ck-tien" data-val="1000000">1M</button>
+                </div>
+                <span class="err" id="err-ck-tien"></span>
+              </div>
+
+              <div class="form-group full">
+                <label for="ck-noidung">Nội dung chuyển khoản</label>
+                <input type="text" id="ck-noidung" name="noiDung"
+                       placeholder="vd: Chuyển tiền học phí tháng 10"
+                       maxlength="255" />
+              </div>
+
+            </div><!-- /form-grid -->
+
+            <button type="submit" class="btn btn-primary btn-block" id="btn-ck">
+              <span class="btn-icon">💸</span> Chuyển khoản ngay
+            </button>
+          </form>
+        </div><!-- /panel-ck -->
+
+        <!-- ── PANEL: QR CODE ──────────────────────────────────── -->
+        <div id="panel-qr" class="tab-panel" role="tabpanel"
+             aria-labelledby="tab-qr">
+          <form id="form-qr" novalidate>
+            <div class="form-grid">
+
+              <div class="form-group">
+                <label for="qr-nguon">Số tài khoản của bạn <span class="req">*</span></label>
+                <input type="text" id="qr-nguon" name="soTaiKhoanNguon"
+                       placeholder="Nhập số tài khoản của bạn"
+                       maxlength="20" required />
+                <span class="err" id="err-qr-nguon"></span>
+              </div>
+
+              <div class="form-group">
+                <label for="qr-dich">Số tài khoản nhận QR <span class="req">*</span></label>
+                <input type="text" id="qr-dich" name="soTaiKhoanDich"
+                       placeholder="Số tài khoản nhận tiền"
+                       maxlength="20" required />
+                <span class="err" id="err-qr-dich"></span>
+              </div>
+
+              <div class="form-group">
+                <label for="qr-nganhang">Ngân hàng nhận <span class="req">*</span></label>
+                <select id="qr-nganhang" name="nganHangDich" required>
+                  <option value="">-- Chọn ngân hàng --</option>
+                  <option value="970415">Vietinbank</option>
+                  <option value="970436">Vietcombank</option>
+                  <option value="970432">VPBank</option>
+                  <option value="970407">Techcombank</option>
+                  <option value="970405">Agribank</option>
+                  <option value="970422">MBBank</option>
+                  <option value="970423">TPBank</option>
+                  <option value="970416">ACB</option>
+                  <option value="970418">BIDV</option>
+                  <option value="796500">OCB</option>
+                </select>
+                <span class="err" id="err-qr-nganhang"></span>
+              </div>
+
+              <div class="form-group">
+                <label for="qr-tien">Số tiền (VNĐ) <span class="req">*</span></label>
+                <div class="input-money">
+                  <input type="number" id="qr-tien" name="soTien"
+                         placeholder="0" min="1000" step="1000" required />
+                  <span class="money-unit">VNĐ</span>
+                </div>
+                <div class="quick-amounts">
+                  <button type="button" class="amount-btn" data-target="qr-tien" data-val="50000">50K</button>
+                  <button type="button" class="amount-btn" data-target="qr-tien" data-val="100000">100K</button>
+                  <button type="button" class="amount-btn" data-target="qr-tien" data-val="200000">200K</button>
+                  <button type="button" class="amount-btn" data-target="qr-tien" data-val="500000">500K</button>
+                  <button type="button" class="amount-btn" data-target="qr-tien" data-val="1000000">1M</button>
+                </div>
+                <span class="err" id="err-qr-tien"></span>
+              </div>
+
+              <div class="form-group full">
+                <label for="qr-noidung">Nội dung thanh toán</label>
+                <input type="text" id="qr-noidung" name="noiDung"
+                       placeholder="vd: Thanh toan don hang 001"
+                       maxlength="255" />
+              </div>
+
+            </div><!-- /form-grid -->
+
+            <button type="submit" class="btn btn-secondary btn-block" id="btn-qr">
+              <span class="btn-icon">🔲</span> Tạo mã QR thanh toán
+            </button>
+          </form>
+
+          <!-- QR Result box -->
+          <div id="qr-result" class="qr-result hidden">
+            <h3 class="qr-result__title">Quét mã để thanh toán</h3>
+            <div class="qr-result__img-wrap">
+              <img id="qr-img" src="" alt="Mã QR thanh toán" />
+            </div>
+            <p class="qr-result__info" id="qr-info"></p>
+            <div class="qr-result__actions">
+              <button class="btn btn-outline" id="btn-download-qr">⬇ Tải QR</button>
+              <button class="btn btn-success" id="btn-xacnhan-qr">✔ Xác nhận đã thanh toán</button>
+            </div>
+          </div>
+        </div><!-- /panel-qr -->
+
+      </div><!-- /payment-card -->
+
+    </section><!-- /page-home -->
+
+    <!-- ── SECTION: LỊCH SỬ ──────────────────────────────────────── -->
+    <section id="page-lichsu" class="page hidden">
+      <div class="card">
+        <div class="card__header">
+          <h2>📋 Lịch sử giao dịch</h2>
+          <div class="filter-row">
+            <input type="text" id="filter-stk" placeholder="Lọc theo số TK nguồn..." />
+            <button class="btn btn-outline" id="btn-filter">🔍 Lọc</button>
+            <button class="btn btn-outline" id="btn-reload">↻ Tải lại</button>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table class="table" id="tbl-lichsu">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Mã GD</th>
+                <th>Loại</th>
+                <th>TK Nguồn</th>
+                <th>TK Đích</th>
+                <th>Ngân hàng</th>
+                <th>Số tiền</th>
+                <th>Nội dung</th>
+                <th>Thời gian</th>
+                <th>Trạng thái</th>
+              </tr>
+            </thead>
+            <tbody id="lichsu-body">
+              <tr><td colspan="10" class="text-center">Đang tải...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section><!-- /page-lichsu -->
+
+  </main><!-- /main -->
+
+  <!-- ═══════════════════════ TOAST NOTIFICATION ════════════════════ -->
+  <div id="toast" class="toast hidden" role="alert" aria-live="polite"></div>
+
+  <!-- ═══════════════════════ MODAL LOADING ════════════════════════ -->
+  <div id="overlay" class="overlay hidden">
+    <div class="spinner"></div>
+    <p>Đang xử lý...</p>
+  </div>
+
+  <!-- ═══════════════════════ MODAL KẾT QUẢ ═══════════════════════ -->
+  <div id="modal-result" class="modal hidden" role="dialog" aria-modal="true">
+    <div class="modal__box">
+      <div class="modal__icon" id="modal-icon"></div>
+      <h2 class="modal__title" id="modal-title"></h2>
+      <p class="modal__msg" id="modal-msg"></p>
+      <div class="modal__detail" id="modal-detail"></div>
+      <button class="btn btn-primary" id="modal-close">Đóng</button>
+    </div>
+  </div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
