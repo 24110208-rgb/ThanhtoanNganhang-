@@ -10,7 +10,7 @@ import com.mycompany.thanhtoannganhang.model.entity.GiaoDich;
 import com.mycompany.thanhtoannganhang.model.entity.TaiKhoan;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import jakarta.transaction.Transactional;
+
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
@@ -33,7 +33,6 @@ public class ThanhToanService {
     // ─────────────────────────────────────────────────────────────────
     //  CHUYỂN KHOẢN NGÂN HÀNG
     // ─────────────────────────────────────────────────────────────────
-    @Transactional
     public ThanhToanResponse chuyenKhoan(ThanhToanRequest req) {
 
         // 1. Kiểm tra tài khoản nguồn
@@ -74,7 +73,6 @@ public class ThanhToanService {
     // ─────────────────────────────────────────────────────────────────
     //  THANH TOÁN QR CODE  (tạo QR → URL VietQR công khai)
     // ─────────────────────────────────────────────────────────────────
-    @Transactional
     public ThanhToanResponse taoQR(ThanhToanRequest req) {
 
         // Tạo URL QR theo chuẩn VietQR (img.vietqr.io)

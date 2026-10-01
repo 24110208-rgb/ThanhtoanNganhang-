@@ -46,6 +46,10 @@
                   aria-selected="false" aria-controls="panel-qr">
             📱 Thanh toán QR
           </button>
+          <button class="tab" id="tab-vnpay" role="tab"
+                  aria-selected="false" aria-controls="panel-vnpay">
+            🏧 VNPay
+          </button>
         </div>
 
         <!-- ── PANEL: CHUYỂN KHOẢN ─────────────────────────────── -->
@@ -203,6 +207,83 @@
             </div>
           </div>
         </div><!-- /panel-qr -->
+
+        <!-- ── PANEL: VNPAY ───────────────────────────────────── -->
+        <div id="panel-vnpay" class="tab-panel" role="tabpanel"
+             aria-labelledby="tab-vnpay">
+
+          <!-- Logo VNPay -->
+          <div class="vnpay-header">
+            <div class="vnpay-logo">🏧 <strong>VNPay</strong> <span class="vnpay-badge">Sandbox</span></div>
+            <p class="vnpay-desc">Thanh toán qua cổng VNPay — hỗ trợ ATM, Visa, MasterCard, QR</p>
+          </div>
+
+          <form id="form-vnpay" novalidate>
+            <div class="form-grid">
+
+              <div class="form-group">
+                <label for="vp-nguon">Số tài khoản của bạn <span class="req">*</span></label>
+                <input type="text" id="vp-nguon" name="soTaiKhoanNguon"
+                       placeholder="Nhập số tài khoản của bạn"
+                       maxlength="20" required />
+                <span class="err" id="err-vp-nguon"></span>
+              </div>
+
+              <div class="form-group">
+                <label for="vp-tien">Số tiền (VNĐ) <span class="req">*</span></label>
+                <div class="input-money">
+                  <input type="number" id="vp-tien" name="soTien"
+                         placeholder="0" min="5000" step="1000" required />
+                  <span class="money-unit">VNĐ</span>
+                </div>
+                <div class="quick-amounts">
+                  <button type="button" class="amount-btn" data-target="vp-tien" data-val="10000">10K</button>
+                  <button type="button" class="amount-btn" data-target="vp-tien" data-val="50000">50K</button>
+                  <button type="button" class="amount-btn" data-target="vp-tien" data-val="100000">100K</button>
+                  <button type="button" class="amount-btn" data-target="vp-tien" data-val="200000">200K</button>
+                  <button type="button" class="amount-btn" data-target="vp-tien" data-val="500000">500K</button>
+                </div>
+                <span class="err" id="err-vp-tien"></span>
+              </div>
+
+              <div class="form-group full">
+                <label for="vp-noidung">Nội dung thanh toán</label>
+                <input type="text" id="vp-noidung" name="noiDung"
+                       placeholder="vd: Thanh toan don hang 001"
+                       maxlength="255" />
+              </div>
+
+            </div>
+
+            <!-- Các phương thức thanh toán VNPay hỗ trợ -->
+            <div class="vnpay-methods">
+              <span>Hỗ trợ:</span>
+              <span class="method-badge">🏦 ATM nội địa</span>
+              <span class="method-badge">💳 Visa / Master</span>
+              <span class="method-badge">📱 QR Code</span>
+              <span class="method-badge">🔐 Internet Banking</span>
+            </div>
+
+            <button type="submit" class="btn btn-vnpay btn-block" id="btn-vnpay">
+              <span class="btn-icon">🏧</span> Thanh toán qua VNPay
+            </button>
+          </form>
+
+          <!-- Thong tin the test sandbox -->
+          <div class="sandbox-info">
+            <p>🧪 <strong>Thông tin thẻ test sandbox:</strong></p>
+            <div class="sandbox-cards">
+              <div class="sandbox-card">
+                <div class="sc-label">ATM / Nội địa (NCB)</div>
+                <div class="sc-row"><span>Số thẻ:</span> <code>9704198526191432198</code></div>
+                <div class="sc-row"><span>Tên:</span> <code>NGUYEN VAN A</code></div>
+                <div class="sc-row"><span>Ngày phát hành:</span> <code>07/15</code></div>
+                <div class="sc-row"><span>OTP:</span> <code>123456</code></div>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /panel-vnpay -->
 
       </div><!-- /payment-card -->
 

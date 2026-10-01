@@ -441,3 +441,115 @@ function badgeLoai(loai) {
   if (loai === 'CHUYEN_KHOAN') return '<span class="badge badge-ck">Chuyển khoản</span>';
   return `<span class="badge">${esc(loai)}</span>`;
 }
+
+
+// ══════════════════════════════════════════════════════════════════
+//  VNPAY
+// ══════════════════════════════════════════════════════════════════
+
+// Khoi dong VNPay khi DOM san sang (goi them vao DOMContentLoaded)
+document.addEventListener('DOMContentLoaded', () => {
+  initVNPay();
+  checkVNPayReturn();
+});
+
+function initVNPay() {
+  const form = document.getElementById('form-vnpay');
+  if (!form) return;
+
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    if (!validateFormVNPay()) return;
+
+    const payload = {
+      soTaiKhoanNguon: v('vp-nguon'),
+      soTien:          parseFloat(v('vp-tien')),
+      noiDung:         v('vp-noidung') || null
+    };
+
+    // Hien thi overlay "Dang chuyen huong..."
+    showOverlayVNPay(true);
+
+    try {
+      const res = await apiPost(`${API_BASE}/vnpay/create`, payload);
+      if (res.success && res.paymentUrl) {
+        // Chuyen huong sang trang VNPay
+        window.location.href = res.paymentUrl;
+      } else {
+        showOverlayVNPay(false);
+        showModalFail('❌ Không tạo được link VNPay', res.message || 'Lỗi không xác định');
+      }
+    } catch (err) {
+      showOverlayVNPay(false);
+      showModalFail('❌ Lỗi kết nối', err.message);
+    }
+  });
+}
+
+function showOverlayVNPay(show) {
+  const overlay = document.getElementById('overlay');
+  const p = overlay?.querySelector('p');
+  if (show) {
+    if (p) p.textContent = 'Đang chuyển hướng đến VNPay...';
+    overlay?.classList.remove('hidden');
+  } else {
+    if (p) p.textContent = 'Đang xử lý...';
+    overlay?.classList.add('hidden');
+  }
+}
+
+// Kiem tra ket qua VNPay sau khi redirect ve
+function checkVNPayReturn() {
+  const params = new URLSearchParams(window.location.search);
+  const status  = params.get('vnp_status');
+  const message = params.get('vnp_message');
+  const txnRef  = params.get('vnp_txnRef');
+
+  if (!status) return;
+
+  // Xoa query params khoi URL (giu trang sach)
+  window.history.replaceState({}, document.title, window.location.pathname);
+
+  if (status === 'success') {
+    showModalSuccess(
+      '✅ Thanh toán VNPay thành công!',
+      `Mã giao dịch: <strong>${txnRef || '—'}</strong><br>
+       ${decodeURIComponent(message || '')}`
+    );
+    showToast('Thanh toán VNPay thành công!', 'success');
+  } else {
+    showModalFail(
+      '❌ Thanh toán VNPay thất bại',
+      decodeURIComponent(message || 'Giao dịch không thành công')
+    );
+  }
+}
+
+function validateFormVNPay() {
+  let ok = true;
+  ok = required('vp-nguon', 'err-vp-nguon', 'Vui lòng nhập số tài khoản') && ok;
+  ok = validateMoneyVNPay('vp-tien', 'err-vp-tien') && ok;
+  return ok;
+}
+
+function validateMoneyVNPay(inputId, errId) {
+  const el    = document.getElementById(inputId);
+  const errEl = document.getElementById(errId);
+  const val   = parseFloat(el.value);
+  if (!el.value || isNaN(val) || val < 5000) {
+    el.classList.add('error');
+    errEl.textContent = 'Số tiền tối thiểu 5.000 VNĐ';
+    el.addEventListener('input', () => {
+      el.classList.remove('error'); errEl.textContent = '';
+    }, { once: true });
+    return false;
+  }
+  return true;
+}
+
+// Badge loai cho VNPAY trong bang lich su
+const _origBadgeLoai = badgeLoai;
+function badgeLoai(loai) {
+  if (loai === 'VNPAY') return '<span class="badge" style="background:#e3f2fd;color:#1565c0">VNPay</span>';
+  return _origBadgeLoai(loai);
+}

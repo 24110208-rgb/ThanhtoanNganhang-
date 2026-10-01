@@ -323,3 +323,58 @@ input.error { border-color: var(--danger); }
   .tab { padding: .75rem .5rem; font-size: .85rem; }
   .filter-row input { width: 100%; }
 }
+
+/* ── 16. VNPay Panel ──────────────────────────────────────── */
+.vnpay-header { text-align: center; margin-bottom: 1.25rem; }
+.vnpay-logo   { font-size: 1.25rem; margin-bottom: .35rem; }
+.vnpay-badge  {
+  display: inline-block; background: #e8f5e9; color: #2e7d32;
+  font-size: .72rem; font-weight: 700; padding: .15rem .5rem;
+  border-radius: 20px; vertical-align: middle; margin-left: .35rem;
+}
+.vnpay-desc { color: var(--text-muted); font-size: .9rem; }
+
+.vnpay-methods {
+  display: flex; flex-wrap: wrap; gap: .4rem;
+  align-items: center; margin: 1rem 0 .5rem;
+  font-size: .82rem; color: var(--text-muted);
+}
+.method-badge {
+  background: #f0f4ff; border: 1px solid var(--border);
+  border-radius: 20px; padding: .2rem .65rem;
+  font-size: .78rem; color: var(--text);
+}
+
+.btn-vnpay {
+  background: linear-gradient(135deg, #005bac, #0082e6);
+  color: #fff;
+}
+.btn-vnpay:hover { opacity: .9; transform: translateY(-1px); }
+
+/* Sandbox info box */
+.sandbox-info {
+  margin-top: 1.5rem; padding: 1rem 1.25rem;
+  background: #fffbeb; border: 1.5px solid #fcd34d;
+  border-radius: var(--radius); font-size: .85rem;
+}
+.sandbox-info p { margin-bottom: .6rem; }
+.sandbox-cards  { display: flex; flex-wrap: wrap; gap: .75rem; }
+.sandbox-card   {
+  background: #fff; border: 1px solid var(--border);
+  border-radius: var(--radius-sm); padding: .75rem 1rem;
+  min-width: 240px;
+}
+.sc-label { font-weight: 700; color: var(--primary); margin-bottom: .4rem; font-size: .82rem; }
+.sc-row   { display: flex; gap: .5rem; margin-bottom: .2rem; align-items: center; }
+.sc-row span { color: var(--text-muted); min-width: 120px; font-size: .8rem; }
+.sc-row code  {
+  background: #f4f7ff; padding: .1rem .4rem;
+  border-radius: 4px; font-size: .8rem; letter-spacing: .5px;
+}
+
+/* Modal VNPay redirect */
+.vnpay-redirect {
+  display: flex; flex-direction: column;
+  align-items: center; gap: .5rem; padding: .5rem 0;
+}
+.vnpay-redirect .spinner { width: 36px; height: 36px; }
