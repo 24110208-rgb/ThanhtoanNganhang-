@@ -12,6 +12,10 @@ RUN rm -rf /usr/local/tomcat/webapps/*
 
 COPY --from=build /app/target/ThanhtoanNganhang.war /usr/local/tomcat/webapps/ROOT.war
 
+# Script startup: ghi context.xml voi gia tri thuc tu env var
+COPY docker-entrypoint.sh /docker-entrypoint.sh
+RUN chmod +x /docker-entrypoint.sh
+
 EXPOSE 8080
 
-ENTRYPOINT ["/bin/sh", "-c", "CATALINA_OPTS=\"-DDB_URL=${DB_URL} -DDB_USER=${DB_USER} -DDB_PASSWORD=${DB_PASSWORD}\" /usr/local/tomcat/bin/catalina.sh run"]
+ENTRYPOINT ["/docker-entrypoint.sh"]
