@@ -1,10 +1,8 @@
 package com.mycompany.thanhtoannganhang.vnpay;
 
-import jakarta.inject.Inject;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.*;
-import java.math.BigDecimal;
 import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,8 +17,7 @@ import java.util.Map;
 @Produces(MediaType.APPLICATION_JSON)
 public class VNPayResource {
 
-    @Inject
-    private VNPayService service;
+    private final VNPayService service = new VNPayService();
 
     @Context
     private HttpServletRequest request;

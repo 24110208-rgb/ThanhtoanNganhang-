@@ -3,7 +3,6 @@ package com.mycompany.thanhtoannganhang.vnpay;
 import com.mycompany.thanhtoannganhang.model.dao.GiaoDichDAOImpl;
 import com.mycompany.thanhtoannganhang.model.entity.GiaoDich;
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 import java.math.BigDecimal;
 import java.util.Map;
 import java.util.Optional;
@@ -15,8 +14,8 @@ import java.util.Optional;
 @ApplicationScoped
 public class VNPayService {
 
-    @Inject
-    private GiaoDichDAOImpl giaoDichDAO;
+    // Khoi tao truc tiep (Tomcat khong co full CDI de @Inject)
+    private final GiaoDichDAOImpl giaoDichDAO = new GiaoDichDAOImpl();
 
     // ─────────────────────────────────────────────────────────────
     //  Tao URL thanh toan VNPay

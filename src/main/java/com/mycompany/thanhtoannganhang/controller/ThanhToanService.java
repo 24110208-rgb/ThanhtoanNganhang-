@@ -7,7 +7,6 @@ import com.mycompany.thanhtoannganhang.model.dao.TaiKhoanDAOImpl;
 import com.mycompany.thanhtoannganhang.model.entity.GiaoDich;
 import com.mycompany.thanhtoannganhang.model.entity.TaiKhoan;
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -22,11 +21,9 @@ import java.util.UUID;
 @ApplicationScoped
 public class ThanhToanService {
 
-    @Inject
-    private TaiKhoanDAOImpl taiKhoanDAO;
-
-    @Inject
-    private GiaoDichDAOImpl giaoDichDAO;
+    // Khoi tao truc tiep (Tomcat khong co full CDI de @Inject)
+    private final TaiKhoanDAOImpl taiKhoanDAO = new TaiKhoanDAOImpl();
+    private final GiaoDichDAOImpl giaoDichDAO = new GiaoDichDAOImpl();
 
     // ─────────────────────────────────────────────────────────────────
     //  CHUYỂN KHOẢN NGÂN HÀNG

@@ -3,8 +3,6 @@ package com.mycompany.thanhtoannganhang.controller;
 import com.mycompany.thanhtoannganhang.dto.ThanhToanRequest;
 import com.mycompany.thanhtoannganhang.dto.ThanhToanResponse;
 import com.mycompany.thanhtoannganhang.model.entity.GiaoDich;
-import jakarta.inject.Inject;
-import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -21,8 +19,7 @@ import java.util.List;
 @Produces(MediaType.APPLICATION_JSON)
 public class ThanhToanResource {
 
-    @Inject
-    private ThanhToanService service;
+    private final ThanhToanService service = new ThanhToanService();
 
     // ─────────────────────────────────────────────────────────────────
     //  POST /api/thanhtoan/chuyenkhoan
