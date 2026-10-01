@@ -14,10 +14,10 @@ RUN rm -rf /usr/local/tomcat/webapps/*
 # Copy WAR
 COPY --from=build /app/target/ThanhtoanNganhang.war /usr/local/tomcat/webapps/ROOT.war
 
-# Tao setenv.sh de Tomcat tu dong load bien moi truong
-RUN echo '#!/bin/sh\nexport JAVA_OPTS="$JAVA_OPTS -DDB_URL=$DB_URL -DDB_USER=$DB_USER -DDB_PASSWORD=$DB_PASSWORD"' \
-    > /usr/local/tomcat/bin/setenv.sh && \
-    chmod +x /usr/local/tomcat/bin/setenv.sh
+# Tao setenv.sh bang printf de dam bao newline dung
+RUN printf '#!/bin/sh\nexport JAVA_OPTS="$JAVA_OPTS -DDB_URL=$DB_URL -DDB_USER=$DB_USER -DDB_PASSWORD=$DB_PASSWORD"\n' \
+    > /usr/local/tomcat/bin/setenv.sh \
+    && chmod +x /usr/local/tomcat/bin/setenv.sh
 
 EXPOSE 8080
 
