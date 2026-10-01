@@ -14,7 +14,11 @@ RUN rm -rf /usr/local/tomcat/webapps/*
 # Copy WAR
 COPY --from=build /app/target/ThanhtoanNganhang.war /usr/local/tomcat/webapps/ROOT.war
 
+# Tao setenv.sh de Tomcat tu dong load bien moi truong
+RUN echo '#!/bin/sh\nexport JAVA_OPTS="$JAVA_OPTS -DDB_URL=$DB_URL -DDB_USER=$DB_USER -DDB_PASSWORD=$DB_PASSWORD"' \
+    > /usr/local/tomcat/bin/setenv.sh && \
+    chmod +x /usr/local/tomcat/bin/setenv.sh
+
 EXPOSE 8080
 
-# Tomcat doc JAVA_OPTS khi khoi dong — Render inject DB_URL, DB_USER, DB_PASSWORD
-CMD ["/bin/sh", "-c", "export JAVA_OPTS=\"-DDB_URL=${DB_URL} -DDB_USER=${DB_USER} -DDB_PASSWORD=${DB_PASSWORD}\" && catalina.sh run"]
+CMD ["catalina.sh", "run"]
